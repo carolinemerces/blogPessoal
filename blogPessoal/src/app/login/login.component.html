@@ -19,7 +19,7 @@
           class="form-control"
           id="exampleInputEmail1"
           placeholder="Digite aqui o seu email"
-          area-describedby="emailHelp"
+          area-describedby="emailHelp" [(ngModel)]='userLogin.usuario'
         />
         <small id="emailHelp" class="form-text text-muted"
           >Seu email não será compartilhado</small
@@ -32,13 +32,13 @@
           type="password"
           class="form-control"
           id="exampleInputPassword1"
-          placeholder="Digite aqui sua senha"
+          placeholder="Digite aqui sua senha" [(ngModel)]='userLogin.senha'
         />
       </div>
 
       <div class="d-flex justify-content-center">
         <!--button-->
-        <button class="btn btn-outline-success w-25" type="submit" routerLink='/home'>
+        <button class="btn btn-outline-success w-25" type="submit" (click)='entrar()'>
           Entrar
         </button>
         <!--/button-->

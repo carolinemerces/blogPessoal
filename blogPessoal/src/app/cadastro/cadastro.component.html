@@ -16,7 +16,7 @@
           type="text"
           class="form-control"
           id="nome"
-          placeholder="Digite aqui seu nome"
+          placeholder="Digite aqui seu nome" [(ngModel)]='user.nome'
         />
       </div>
 
@@ -26,7 +26,7 @@
           type="email"
           class="form-control"
           id="email"
-          placeholder="nome@exemplo.com"
+          placeholder="nome@exemplo.com" [(ngModel)]='user.usuario'
         />
       </div>
 
@@ -36,7 +36,7 @@
           type="password"
           class="form-control"
           id="senha"
-          placeholder="Digite aqui sua senha"
+          placeholder="Digite aqui sua senha" (input)='conferirSenha($event)' value='{{senha}}'
         />
       </div>
 
@@ -46,13 +46,13 @@
           type="password"
           class="form-control"
           id="senhaConf"
-          placeholder="Confirme sua senha"
+          placeholder="Confirme sua senha" [(ngModel)]='user.senha'
         />
       </div>
 
       <div class="d-flex justify-content-center">
         <!--button-->
-        <button class="btn btn-outline-success w-25" type="submit" routerLink='/login'>
+        <button class="btn btn-outline-success w-25" type="submit" (click)='cadastrar()'>
           Cadastrar
         </button>
         <!--/button-->
