@@ -11,6 +11,7 @@ const routes: Routes = [
   {path:'feed', component:FeedComponent},
   {path:'login', component:LoginComponent},
   {path:'cadastro', component:CadastroComponent}
+  {path:'cadastro-tema', component:PostTemaComponent}
 ];
 
 @NgModule({

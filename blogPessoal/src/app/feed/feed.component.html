@@ -23,7 +23,7 @@
           type="text"
           class="form-control"
           id="titulo"
-          placeholder="Digite aqui o seu título"
+          placeholder="Digite aqui o seu título" [(ngModel)]='postagem.titulo'
         />
       </div>
       <!--/formulário 1 - Título-->
@@ -34,7 +34,7 @@
           class="form-control"
           id="texto"
           rows="3"
-          placeholder="Digite aqui o seu texto"
+          placeholder="Digite aqui o seu texto" [(ngModel)]='postagem.texto'
         ></textarea>
       </div>
       <!--/formulário 2 - Texto-->
@@ -45,11 +45,11 @@
           <!--formulário 3 - Escolha ou Cadastre um tema-->
           <div class="form-group m-0">
             <label class="text-monospace" for="tema"
-              >Escolha um tema ou <a href=""></a>Cadastre um novo</label
+              >Escolha um tema ou <a routerLink="/cadastro-tema">Cadastre um novo</a></label
             >
             <!--seletor-->
-            <select name="tema" id="tema" class="form-control">
-              <option>Testando 123</option>
+            <select name="tema" id="tema" class="form-control" [(ngModel)]='idTema' (change)='findByIdTema()'>
+              <option *ngFor='let item of listaTemas' value={{item.id}}>{{item.descricao}}</option>
             </select>
             <!--/seletor-->
           </div>
@@ -59,7 +59,7 @@
         <!--coluna 2 da coluna 2-->
         <div class="col-md-6 d-flex justify-content-end">
           <!--button-->
-          <button type="button" class="btn btn-outline-success w-25">
+          <button type="button" class="btn btn-outline-success w-25" (click)='publicar()'>
             Publicar
           </button>
           <!--/button-->
@@ -116,7 +116,8 @@
                   type="search"
                   class="form-control"
                   id="search"
-                  placeholder="Pesquisar postagem" aria-label="Pesquisar"
+                  placeholder="Pesquisar postagem"
+                  aria-label="Pesquisar"
                 />
               </div>
             </div>
@@ -133,7 +134,43 @@
             <!--/coluna 2-->
           </div>
           <!--/linha de pesquisa-->
-      </div>
+
+          <!--card das pesquisas-->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card mt-3 mb-3" *ngFor="let item of listaPostagens | orderBy:key:reverse">
+                <div class="card-header">
+                  <div class="row d-flex align-items-center">
+                    <div class="col-md-8">
+                      <h5 class="card-title">{{item.titulo}}</h5>
+                      <small>Tema: {{item.tema.descricao}}</small>
+                    </div>
+                    <div class="col-md-4 d-flex justify-content-end">
+                      <button class="mr-3 btn btn-outline-info">Editar</button>
+
+                      <button class="btn btn-outline-danger ml-3">
+                        Apagar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                  <p class="card-text" aria-describedby="texto">
+                    {{item.texto}} 
+                  </p>
+                  <small
+                    id="texto"
+                    class="form-text m-0 text-muted mb-3 text-monospace"
+                  >
+                    Postado em {{item.data | date: 'dd/MM/yyyy'}} às {{item.data | date:'HH:mm'}} </small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/card das pesquisas-->
+        </div>
         <!--/Conteúdo de Postagens-->
 
         <!--Conteúdo de Postagens temas-->
@@ -152,7 +189,8 @@
                   type="search"
                   class="form-control"
                   id="search"
-                  placeholder="Pesquisar postagem" aria-label="Pesquisar"
+                  placeholder="Pesquisar postagem"
+                  aria-label="Pesquisar"
                 />
               </div>
             </div>
