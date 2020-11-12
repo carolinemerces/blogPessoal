@@ -44,4 +44,7 @@ export class PostTemaComponent implements OnInit {
     }
   }
 
+  voltar(){
+    this.router.navigate(['/feed'])
+  }
 }

@@ -13,7 +13,7 @@
     <div class="col-md-8">
       <!--título-->
       <h3 class="txt-center mb-4 text-monospace">
-        Como tem sido sua experiência na área ambiental?
+        Conte-nos um pouco da sua experiência com o meio ambiente!
       </h3>
       <!--/título-->
       <!--formulário 1 - Título-->
@@ -45,7 +45,7 @@
           <!--formulário 3 - Escolha ou Cadastre um tema-->
           <div class="form-group m-0">
             <label class="text-monospace" for="tema"
-              >Escolha um tema ou <a routerLink="/cadastro-tema">Cadastre um novo</a></label
+              >Escolha um tema. Não encontrou o que queria? <a class="text-success" routerLink="/cadastro-tema">Cadastre um novo ou Edite um!</a></label
             >
             <!--seletor-->
             <select name="tema" id="tema" class="form-control" [(ngModel)]='idTema' (change)='findByIdTema()'>
@@ -59,7 +59,7 @@
         <!--coluna 2 da coluna 2-->
         <div class="col-md-6 d-flex justify-content-end">
           <!--button-->
-          <button type="button" class="btn btn-outline-success w-25" (click)='publicar()'>
+          <button type="button" class="btn btn-success w-50" (click)='publicar()'>
             Publicar
           </button>
           <!--/button-->
@@ -143,12 +143,11 @@
                   <div class="row d-flex align-items-center">
                     <div class="col-md-8">
                       <h5 class="card-title">{{item.titulo}}</h5>
-                      <small>Tema: {{item.tema.descricao}}</small>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                      <button class="mr-3 btn btn-outline-info">Editar</button>
+                      <button class="mr-3 btn btn-info" [routerLink]="['/editar-post',item.id]">Editar</button>
 
-                      <button class="btn btn-outline-danger ml-3">
+                      <button class="btn btn-danger ml-3" [routerLink]="['/delete-post',item.id]">
                         Apagar
                       </button>
                     </div>
@@ -163,8 +162,9 @@
                     id="texto"
                     class="form-text m-0 text-muted mb-3 text-monospace"
                   >
-                    Postado em {{item.data | date: 'dd/MM/yyyy'}} às {{item.data | date:'HH:mm'}} </small
+                    Postado em {{item.data}} às {{item.data}} </small
                   >
+                  <small>Tema: {{item.tema.descricao}}</small>
                 </div>
               </div>
             </div>
