@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Postagem } from '../model/Postagem';
 import { Tema } from '../model/Tema';
+import { AlertasService } from '../service/alertas.service';
 import { PostagemService } from '../service/postagem.service';
 import { TemaService } from '../service/tema.service';
 
@@ -15,13 +16,17 @@ export class FeedComponent implements OnInit {
   reverse = true
   postagem: Postagem = new Postagem()
   listaPostagens: Postagem[]
+  titulo: string
 
   tema: Tema = new Tema()
   listaTemas: Tema[]
   idTema: number
+  nomeTema: string
 
 
-  constructor(private postagemService: PostagemService, private temaService: TemaService) { }
+  constructor(private postagemService: PostagemService,
+     private temaService: TemaService,
+     private alert: AlertasService) { }
 
   ngOnInit() {
     window.scroll(0,0)
@@ -41,13 +46,13 @@ publicar(){
   this.postagem.tema = this.tema
 
   if(this.postagem.titulo == null || this.postagem.texto == null || this.postagem.tema == null){
-alert ('Preencha todos os campos antes de publicar!')
+    this.alert.showAlertWarning ('Preencha todos os campos antes de publicar!')
   }
   else{
 this.postagemService.postPostagem(this.postagem).subscribe((resp: Postagem)=>{
   this.postagem = resp
   this.postagem = new Postagem()
-  alert('Postagem realizada com sucesso!')
+  this.alert.showAlertSuccess('Postagem realizada com sucesso!')
   this.findAllPostagens()
 })
   }
@@ -65,5 +70,26 @@ findByIdTema(){
   })
 }
 
+findByTituloPostagem(){
+if(this.titulo === ''){
+  this.findAllPostagens()
+}
+else{
+  this.postagemService.getByTituloPostagem(this.titulo).subscribe((resp: Postagem[])=>{
+    this.listaPostagens = resp
+  })
+}
+}
 
+findByNomeTema(){
+  if(this.nomeTema === ''){
+    this.findAllTemas()
+  }
+  else{
+    this.temaService.getByNomeTema(this.nomeTema).subscribe((resp: Tema[]) => {
+      this.listaTemas = resp
+    })
+  }
+  
+}
 }

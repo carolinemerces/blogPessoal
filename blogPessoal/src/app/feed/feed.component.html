@@ -23,7 +23,8 @@
           type="text"
           class="form-control"
           id="titulo"
-          placeholder="Digite aqui o seu título" [(ngModel)]='postagem.titulo'
+          placeholder="Digite aqui o seu título"
+          [(ngModel)]="postagem.titulo"
         />
       </div>
       <!--/formulário 1 - Título-->
@@ -34,7 +35,8 @@
           class="form-control"
           id="texto"
           rows="3"
-          placeholder="Digite aqui o seu texto" [(ngModel)]='postagem.texto'
+          placeholder="Digite aqui o seu texto"
+          [(ngModel)]="postagem.texto"
         ></textarea>
       </div>
       <!--/formulário 2 - Texto-->
@@ -45,11 +47,22 @@
           <!--formulário 3 - Escolha ou Cadastre um tema-->
           <div class="form-group m-0">
             <label class="text-monospace" for="tema"
-              >Escolha um tema. Não encontrou o que queria? <a class="text-success" routerLink="/cadastro-tema">Cadastre um novo ou Edite um!</a></label
+              >Escolha um tema. Não encontrou o que queria?
+              <a class="text-success" routerLink="/cadastro-tema"
+                >Cadastre um novo ou Edite um!</a
+              ></label
             >
             <!--seletor-->
-            <select name="tema" id="tema" class="form-control" [(ngModel)]='idTema' (change)='findByIdTema()'>
-              <option *ngFor='let item of listaTemas' value={{item.id}}>{{item.descricao}}</option>
+            <select
+              name="tema"
+              id="tema"
+              class="form-control"
+              [(ngModel)]="idTema"
+              (change)="findByIdTema()"
+            >
+              <option *ngFor="let item of listaTemas" value="{{ item.id }}">
+                {{ item.descricao }}
+              </option>
             </select>
             <!--/seletor-->
           </div>
@@ -59,7 +72,11 @@
         <!--coluna 2 da coluna 2-->
         <div class="col-md-6 d-flex justify-content-end">
           <!--button-->
-          <button type="button" class="btn btn-success w-50" (click)='publicar()'>
+          <button
+            type="button"
+            class="btn btn-success w-50"
+            (click)="publicar()"
+          >
             Publicar
           </button>
           <!--/button-->
@@ -118,6 +135,7 @@
                   id="search"
                   placeholder="Pesquisar postagem"
                   aria-label="Pesquisar"
+                  [(ngModel)]="titulo"
                 />
               </div>
             </div>
@@ -126,7 +144,11 @@
             <!--coluna 2-->
             <div class="col-md-2 pl-0">
               <!--button-->
-              <button class="btn btn-outline-success w-100" type="button">
+              <button
+                class="btn btn-outline-success w-100"
+                type="button"
+                (click)="findByTituloPostagem()"
+              >
                 Pesquisar
               </button>
               <!--/button-->
@@ -136,18 +158,29 @@
           <!--/linha de pesquisa-->
 
           <!--card das pesquisas-->
-          <div class="row">
+          <div class="row mt-3">
             <div class="col-md-12">
-              <div class="card mt-3 mb-3" *ngFor="let item of listaPostagens | orderBy:key:reverse">
+              <div
+                class="card mb-3"
+                *ngFor="let item of listaPostagens | orderBy: key:reverse"
+              >
                 <div class="card-header">
                   <div class="row d-flex align-items-center">
                     <div class="col-md-8">
-                      <h5 class="card-title">{{item.titulo}}</h5>
+                      <h5 class="card-title">{{ item.titulo }}</h5>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                      <button class="mr-3 btn btn-info" [routerLink]="['/editar-post',item.id]">Editar</button>
+                      <button
+                        class="mr-3 btn btn-info"
+                        [routerLink]="['/editar-post', item.id]"
+                      >
+                        Editar
+                      </button>
 
-                      <button class="btn btn-danger ml-3" [routerLink]="['/delete-post',item.id]">
+                      <button
+                        class="btn btn-danger ml-3"
+                        [routerLink]="['/delete-post', item.id]"
+                      >
                         Apagar
                       </button>
                     </div>
@@ -156,15 +189,9 @@
 
                 <div class="card-body">
                   <p class="card-text" aria-describedby="texto">
-                    {{item.texto}} 
+                    {{ item.texto }}
                   </p>
-                  <small
-                    id="texto"
-                    class="form-text m-0 text-muted mb-3 text-monospace"
-                  >
-                    Postado em {{item.data}} às {{item.data}} </small
-                  >
-                  <small>Tema: {{item.tema.descricao}}</small>
+                  <small>Tema: {{ item.tema.descricao }}</small>
                 </div>
               </div>
             </div>
@@ -191,6 +218,7 @@
                   id="search"
                   placeholder="Pesquisar postagem"
                   aria-label="Pesquisar"
+                  [(ngModel)]="nomeTema"
                 />
               </div>
             </div>
@@ -198,7 +226,11 @@
             <!--coluna 2-->
             <div class="col-md-2 pl-0">
               <!--button-->
-              <button class="btn btn-outline-success w-100" type="button">
+              <button
+                class="btn btn-outline-success w-100"
+                type="button"
+                (click)="findByNomeTema()"
+              >
                 Pesquisar
               </button>
               <!--/button-->
@@ -206,6 +238,34 @@
             <!--/coluna 2-->
           </div>
           <!--/linha de pesquisa-->
+
+          <!--card das pesquisas-->
+          <div class="row mt-3">
+            <!--lista todos os temas e dentro da model de temas existe uma array de postagens (olhar na model postagens[]-->
+            <div class="col-md-12" *ngFor="let item of listaTemas | orderBy: key:reverse">
+              <!--varre a array do item.postagem (essa div é "filha" da acima-->
+              <div *ngFor="let post of item.postagem">
+              <div
+                class="card mb-3"
+              >
+                  <div class="card-header">
+                    <div class="row d-flex align-items-center">
+                      <div class="col-md-12">
+                        <h5 class="card-title">{{ post.titulo }}</h5>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <p class="card-text" aria-describedby="texto">
+                      {{ post.texto }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/card das pesquisas-->
         </div>
         <!--/Conteúdo de Postagens temas-->
       </div>

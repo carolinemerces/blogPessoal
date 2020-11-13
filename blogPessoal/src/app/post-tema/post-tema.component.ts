@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Tema } from '../model/Tema';
+import { AlertasService } from '../service/alertas.service';
 import { TemaService } from '../service/tema.service';
 
 @Component({
@@ -12,7 +13,10 @@ export class PostTemaComponent implements OnInit {
   listaTemas: Tema[];
   tema: Tema = new Tema();
 
-  constructor(private temaService: TemaService, private router: Router) {}
+  constructor(private temaService: TemaService,
+     private router: Router,
+      private alert: AlertasService
+     ) {}
 
   ngOnInit() {
     this.findAllTemas()
@@ -32,13 +36,13 @@ export class PostTemaComponent implements OnInit {
 
   cadastrar(){
     if(this.tema.descricao == null){
-      alert('Preencha o campo de nome do tema corretamente')
+      this.alert.showAlertWarning('Preencha o campo de nome do tema corretamente')
 
     }
     else{
       this.temaService.postTema(this.tema).subscribe((resp: Tema)=>{
         this.tema = resp
-        alert('Novo tema cadastrado com sucesso!')
+        this.alert.showAlertSuccess('Novo tema cadastrado com sucesso!')
         this.router.navigate(['/feed'])
       })
     }
