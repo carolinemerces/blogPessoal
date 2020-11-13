@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertasService } from '../service/alertas.service';
 
 @Component({
   selector: 'app-home',
@@ -8,14 +10,19 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
 
-  constructor() { }
+  constructor(private alert: AlertasService,
+    private router: Router) { }
 
   ngOnInit() {
     window.scroll(0,0)
   }
 
-verFeed(){
-
-}
+  btnFeed(){
+    let token = localStorage.getItem('token')
+      if(token==null){
+        this.router.navigate(['/login'])
+        this.alert.showAlertInfo('Faça login antes de entrar no Feed!')
+      }
+  }
 
 }
