@@ -36,13 +36,14 @@ btnLogin(){
   return ok
 }
 
-btnFeed(){
+/* btnFeed(){
   let ok=false
   let token=localStorage.getItem('token')
   if(token != null){
     ok = true
   }
   return ok
-}
+} */
+
 
 }
